@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Sell my Car{% endblock %}
+{% block content %}
+    <div class="page-heading">
+        <h1>Sell a Car</h1>
+        <p>Enter your car's details to get an estimated resale price.</p>
+    </div>
+
+    <div class="form-card">
+        <form method="post">
+            <div class="form-grid">
+                <div class="form-row">
+                    <label for="brand">Brand</label>
+                    <input type="text" id="brand" name="brand" placeholder="e.g. Maruti Suzuki" required>
+                </div>
+                <div class="form-row">
+                    <label for="model">Model</label>
+                    <input type="text" id="model" name="model" placeholder="e.g. Swift" required>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <label for="YOP">Which year did you purchase your car?</label>
+                    <input type="number" id="YOP" name="YOP" min="1980" max="2026" required>
+                </div>
+                <div class="form-row">
+                    <label for="OP">Initial price of your car (&#8377;)</label>
+                    <input type="number" id="OP" name="OP" min="1" required>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <label for="Dist">Total distance driven (km)</label>
+                    <input type="number" id="Dist" name="Dist" min="0" required>
+                </div>
+                <div class="form-row">
+                    <label for="cond">Condition of your car</label>
+                    <select id="cond" name="cond" required>
+                        <option value="1">1. Excellent</option>
+                        <option value="2">2. Good</option>
+                        <option value="3">3. Fair</option>
+                        <option value="4">4. Poor</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Get estimated price</button>
+        </form>
+    </div>
+{% endblock %}

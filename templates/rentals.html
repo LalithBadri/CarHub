@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Rent a Car{% endblock %}
+{% block content %}
+    <div class="page-heading">
+        <h1>Available Cars</h1>
+        <p>{{ cars|length }} car{{ 's' if cars|length != 1 else '' }} ready to book right now.</p>
+    </div>
+
+    {% if not cars %}
+        <p class="empty-state">No cars are available right now.</p>
+    {% else %}
+        <div class="car-grid">
+            {% for car in cars %}
+            <article class="car-card">
+                <div class="car-card-top">
+                    <span class="car-type-badge">{{ car.car_type }}</span>
+                    <span class="car-price"><strong>&#8377;{{ "%.0f"|format(car.rate_per_day) }}</strong> / day</span>
+                </div>
+                <h3>{{ car.brand }} {{ car.model }}</h3>
+                <ul class="car-specs">
+                    <li>{{ car.transmission }}</li>
+                    <li>{{ car.seats }} seats</li>
+                </ul>
+                <a href="{{ url_for('book_car', car_id=car.id) }}" class="btn btn-primary btn-block">Book this car</a>
+            </article>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

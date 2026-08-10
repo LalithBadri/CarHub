@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Booking Confirmed{% endblock %}
+{% block content %}
+    <div class="result-card">
+        <div class="result-icon success">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 12.5 L9.5 18 L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h1>Booking Confirmed</h1>
+        <p class="result-subtitle">Booking #{{ booking.id }} for {{ booking.name }}</p>
+
+        <dl class="detail-list">
+            <div><dt>Car</dt><dd>{{ car.brand }} {{ car.model }}</dd></div>
+            <div><dt>Today's date</dt><dd>{{ booking.SD }}</dd></div>
+            <div><dt>Return date</dt><dd>{{ booking.RD }}</dd></div>
+            <div><dt>Total days</dt><dd>{{ booking.tot }}</dd></div>
+            <div><dt>Rate / day</dt><dd>&#8377;{{ "%.2f"|format(car.rate_per_day) }}</dd></div>
+            <div class="detail-total"><dt>Total price</dt><dd>&#8377;{{ "%.2f"|format(booking.price) }}</dd></div>
+        </dl>
+
+        <a href="{{ url_for('rentals') }}" class="btn btn-outline btn-block">Back to all cars</a>
+    </div>
+{% endblock %}

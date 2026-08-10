@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}All Bookings{% endblock %}
+{% block content %}
+    <div class="page-heading">
+        <h1>All Bookings</h1>
+        <p>Every rental booked through CarHub so far.</p>
+    </div>
+
+    {% if not bookings %}
+        <p class="empty-state">No bookings yet.</p>
+    {% else %}
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Car</th>
+                        <th>Customer</th>
+                        <th>Pick-up</th>
+                        <th>Drop-off</th>
+                        <th>Days</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                    <tr>
+                        <td>{{ b.id }}</td>
+                        <td>{{ b.brand }} {{ b.model }}</td>
+                        <td>{{ b.customer_name }}</td>
+                        <td>{{ b.start_date }}</td>
+                        <td>{{ b.end_date }}</td>
+                        <td>{{ b.total_days }}</td>
+                        <td>&#8377;{{ "%.2f"|format(b.total_price) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    <p class="back-link"><a href="{{ url_for('rentals') }}">&larr; Back to all cars</a></p>
+{% endblock %}

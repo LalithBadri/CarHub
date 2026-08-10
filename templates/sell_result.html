@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Estimated Price{% endblock %}
+{% block content %}
+    <div class="result-card">
+        <p class="result-subtitle">{{ brand }} {{ model }} ({{ YOP }})</p>
+        <p class="price-display">&#8377;{{ "%.2f"|format(val) }}</p>
+
+        <h2 class="breakdown-heading">How this was calculated</h2>
+        <dl class="detail-list">
+            <div><dt>Initial price</dt><dd>&#8377;{{ "%.2f"|format(OP) }}</dd></div>
+            <div><dt>Age</dt><dd>{{ breakdown.age }} year(s)</dd></div>
+            <div>
+                <dt>Depreciation (8%/year &times; age &times; price)</dt>
+                <dd class="negative">&minus; &#8377;{{ "%.2f"|format(breakdown.Peryear) }}</dd>
+            </div>
+            <div>
+                <dt>Mileage deduction</dt>
+                <dd class="negative">&minus; &#8377;{{ "%.2f"|format(breakdown.Distdip) }}</dd>
+            </div>
+            <div>
+                <dt>Condition ({{ breakdown.condition_label }}, &times;{{ breakdown.factor }})</dt>
+                <dd>applied to final value</dd>
+            </div>
+        </dl>
+
+        <a href="{{ url_for('sell') }}" class="btn btn-outline btn-block">Estimate another car</a>
+    </div>
+{% endblock %}

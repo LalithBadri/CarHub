@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CarHub{% endblock %}</title>
+    <style>
+:root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface-alt: #eef1f7;
+    --text: #171a21;
+    --text-muted: #656d7a;
+    --border: #e3e6ec;
+    --primary: #3454ff;
+    --primary-dark: #2540d1;
+    --primary-contrast: #ffffff;
+    --accent: #14b8a6;
+    --danger: #d1304a;
+    --danger-bg: #fdeaee;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+    --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.10);
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #10121a;
+        --surface: #181b25;
+        --surface-alt: #1f232f;
+        --text: #edeff4;
+        --text-muted: #9199a8;
+        --border: #2a2e3a;
+        --primary: #6b83ff;
+        --primary-dark: #8497ff;
+        --primary-contrast: #0b0d13;
+        --accent: #2dd4bf;
+        --danger: #f16b83;
+        --danger-bg: #351b22;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.5);
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    line-height: 1.25;
+    margin: 0 0 0.5rem;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text);
+}
+
+.logo-icon {
+    width: 30px;
+    height: 20px;
+    color: var(--primary);
+}
+
+.site-nav {
+    display: flex;
+    gap: 1.75rem;
+}
+
+.site-nav a {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.site-nav a:hover {
+    color: var(--text);
+}
+
+.nav-toggle-checkbox {
+    display: none;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.nav-toggle span {
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+}
+
+main.container {
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+    min-height: calc(100vh - 64px - 80px);
+}
+
+.page-heading {
+    margin-bottom: 2rem;
+}
+
+.page-heading p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.back-link {
+    margin-top: 1.5rem;
+}
+
+.empty-state {
+    color: var(--text-muted);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--primary-contrast);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-outline {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.hero {
+    text-align: center;
+    max-width: 640px;
+    margin: 1rem auto 3.5rem;
+}
+
+.hero h1 {
+    font-size: 2.4rem;
+    letter-spacing: -0.02em;
+}
+
+.hero p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin: 0.75rem 0 1.75rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--surface-alt);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.85rem;
+}
+
+.feature-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.car-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.car-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.car-type-badge {
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+}
+
+.car-price {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.car-price strong {
+    color: var(--text);
+    font-size: 1.1rem;
+}
+
+.car-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.car-specs {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.car-specs li::before {
+    content: "";
+}
+
+.car-specs li + li::before {
+    content: "\00b7  ";
+}
+
+.form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    max-width: 560px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-row {
+    margin-bottom: 1.1rem;
+}
+
+.form-row label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text-muted);
+}
+
+input, select {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(52, 84, 255, 0.15);
+}
+
+.live-total {
+    background: var(--surface-alt);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.live-total strong {
+    color: var(--text);
+}
+
+.result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+    max-width: 560px;
+    text-align: center;
+}
+
+.result-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.result-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.result-icon.success {
+    background: rgba(20, 184, 166, 0.12);
+    color: var(--accent);
+}
+
+.result-subtitle {
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+}
+
+.price-display {
+    font-size: 2.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: -0.5rem 0 1.5rem;
+}
+
+.breakdown-heading {
+    text-align: left;
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+}
+
+.detail-list {
+    margin: 0 0 1.75rem;
+    text-align: left;
+}
+
+.detail-list > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+}
+
+.detail-list dt {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.detail-list dd {
+    margin: 0;
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.detail-list dd.negative {
+    color: var(--danger);
+}
+
+.detail-total {
+    border-bottom: none !important;
+    padding-top: 0.9rem !important;
+}
+
+.detail-total dt, .detail-total dd {
+    font-size: 1.05rem;
+    color: var(--text);
+    font-weight: 700;
+}
+
+.table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+th, td {
+    padding: 0.85rem 1.1rem;
+    text-align: left;
+}
+
+thead th {
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+tbody tr + tr {
+    border-top: 1px solid var(--border);
+}
+
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.flashes li {
+    background: var(--danger-bg);
+    color: var(--danger);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 0;
+}
+
+.site-footer p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+@media (max-width: 720px) {
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 1.9rem;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .site-nav {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        gap: 0;
+        padding: 0.5rem 0;
+        display: none;
+    }
+
+    .site-nav a {
+        padding: 0.85rem 1.5rem;
+    }
+
+    .nav-toggle-checkbox:checked ~ .site-nav {
+        display: flex;
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="{{ url_for('index') }}" class="logo">
+                <svg class="logo-icon" viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M4 13 L6.5 6.5C7 5 8 4 9.5 4H20C21.5 4 22.5 5 23 6.5L25.5 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="1.5" y="13" width="27" height="4.5" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                    <circle cx="8" cy="17.5" r="2" fill="currentColor"/>
+                    <circle cx="22" cy="17.5" r="2" fill="currentColor"/>
+                </svg>
+                <span>CarHub</span>
+            </a>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+            <label for="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </label>
+
+            <nav class="site-nav">
+                <a href="{{ url_for('rentals') }}">Rent a Car</a>
+                <a href="{{ url_for('sell') }}">Sell my Car</a>
+                <a href="{{ url_for('bookings') }}">Bookings</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>CarHub &mdash; a school project. Estimates are illustrative only.</p>
+        </div>
+    </footer>
+
+    <script>
+const bookingForm = document.getElementById("booking-form");
+
+if (bookingForm) {
+    const rate = parseFloat(bookingForm.dataset.rate);
+    const totInput = document.getElementById("tot");
+    const liveTotal = document.getElementById("live-total");
+    const liveDays = document.getElementById("live-total-days");
+    const livePrice = document.getElementById("live-total-price");
+
+    function updateLiveTotal() {
+        const days = parseInt(totInput.value, 10);
+
+        if (days > 0) {
+            liveDays.textContent = days;
+            livePrice.textContent = "₹" + (days * rate).toFixed(2);
+            liveTotal.hidden = false;
+        } else {
+            liveTotal.hidden = true;
+        }
+    }
+
+    totInput.addEventListener("input", updateLiveTotal);
+}
+    </script>
+</body>
+</html>

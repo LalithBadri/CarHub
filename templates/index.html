@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}CarHub - Rent or Sell a Car{% endblock %}
+{% block content %}
+    <section class="hero">
+        <h1>Rent a car, or sell yours &mdash; sorted in minutes.</h1>
+        <p>Browse a small fleet ready to book, or get an instant, transparent resale estimate for your own car.</p>
+        <div class="hero-actions">
+            <a href="{{ url_for('rentals') }}" class="btn btn-primary">Rent a car</a>
+            <a href="{{ url_for('sell') }}" class="btn btn-outline">Sell my car</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M4 16 L6 10.5C6.4 9.4 7.4 8.7 8.6 8.7H15.4C16.6 8.7 17.6 9.4 18 10.5L20 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="2.5" y="16" width="19" height="4" rx="1.6" stroke="currentColor" stroke-width="1.6"/>
+                    <circle cx="7" cy="20" r="1.4" fill="currentColor"/>
+                    <circle cx="17" cy="20" r="1.4" fill="currentColor"/>
+                </svg>
+            </div>
+            <h3>A fleet ready to book</h3>
+            <p>Hatchbacks, sedans and SUVs at a range of daily rates &mdash; pick dates and confirm in a couple of steps.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M12 3 L12 21 M6 7 H15.5C17 7 18 8.1 18 9.5C18 10.9 17 12 15.5 12H8.5C7 12 6 13.1 6 14.5C6 15.9 7 17 8.5 17H18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3>Instant price estimate</h3>
+            <p>Enter a few details about your car and see a resale estimate with the full working shown, step by step.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M4 12.5 L9.5 18 L20 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3>Simple, no clutter</h3>
+            <p>No sign-ups, no hidden fees &mdash; just the booking or the estimate you came for.</p>
+        </div>
+    </section>
+{% endblock %}
