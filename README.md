@@ -1,5 +1,8 @@
 # CarHub
 **ALL HTML FRONT END PROGRAMMING IS DONE BY AI, LOGIC AND BACK-END PYTHON AND MYSQL PROGRAMMING IS DONE BY MYSELF**
+
+
+
 A small Python + MySQL website for two things:
 
 1. **Renting a car** — browse a fleet, book one, and see a total price.
